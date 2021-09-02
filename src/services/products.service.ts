@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 import { HttpException } from '@exceptions/HttpException';
 import productModel from '@/models/products.model';
 import { Product } from '@/interfaces/products.interface';
@@ -7,45 +6,26 @@ class ProductService {
   static importProducts() {
     const fs = require('fs');
     const csv = require('csv-parser');
-    
     fs.createReadStream('products.csv')
-    .pipe(csv())
-    .on('data',(row) => {
-      productModel.push(row)
-    })
-    .on('end',() => {
-      console.log("done")
-    });
-    
+      .pipe(csv())
+      .on('data', row => {
+        productModel.push(row);
+      })
+      .on('end', () => {
+        console.log('done');
+      });
   }
   public products = productModel;
-  
-  public async findAllPoductByGender(
-    genderQuery: string,
-    limit: number = 100,
-    page: number= 1): Promise<Product[]> {
-    return this
-    .products
-    .filter(p => p.gender === genderQuery)
-    .slice((page-1)*limit, page*limit)
-    
+
+  public async findAllPoductByGender(genderQuery: string, limit = 100, page = 1): Promise<Product[]> {
+    return this.products.filter(p => p.gender === genderQuery).slice((page - 1) * limit, page * limit);
   }
-  public async findAllProductsBySalePrice(
-    salesPriceQeury: string,
-    limit:number=100,
-    page:number =1
-    ): Promise<Product[]> {
-    return this
-    .products
-    .filter(p => p.sale_price === salesPriceQeury) 
-    .slice((page-1)*limit, page*limit)
+  public async findAllProductsBySalePrice(salesPriceQeury: string, limit = 100, page = 1): Promise<Product[]> {
+    return this.products.filter(p => p.sale_price === salesPriceQeury).slice((page - 1) * limit, page * limit);
   }
-  public async findAllProducts(
-    limit:number=100,
-    page:number=1): Promise<Product[]> {
+  public async findAllProducts(limit = 100, page = 1): Promise<Product[]> {
     const products: Product[] = this.products;
-    return products
-    .slice((page-1)*limit, page*limit);
+    return products.slice((page - 1) * limit, page * limit);
   }
 
   public async findProductById(gtin: string): Promise<Product> {
@@ -54,8 +34,6 @@ class ProductService {
 
     return foundProduct;
   }
-
-  
 }
 
 export default ProductService;

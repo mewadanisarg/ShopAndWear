@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { NextFunction, Request, Response } from 'express';
 import productService from '@services/products.service';
 import { Product, ProductQuery } from '@/interfaces/products.interface';
@@ -7,33 +8,31 @@ class ProductController {
 
   public getProducts = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const pq : ProductQuery = req.query
-      const {gender, sale_price, page = 1, limit= 100} =  pq
-
-      var findAllProductData;  
-      if(gender !== undefined) {
-        console.log(`with gender query parameter: ${gender}`)
+      const pq: ProductQuery = req.query;
+      const { gender, sale_price, page = 1, limit = 100 } = pq;
+      let findAllProductData;
+      if (gender !== undefined) {
+        console.log(`with gender query parameter: ${gender}`);
         findAllProductData = await this.productService.findAllPoductByGender(
-          gender,  
+          gender,
           Number.parseInt(limit.toString()),
-          Number.parseInt(page.toString())
-          );
-      } else if(! sale_price===undefined) {
-        console.log(`with sales query parameter: ${sale_price}`)
+          Number.parseInt(page.toString()),
+        );
+      } else if (!sale_price === undefined) {
+        console.log(`with sales query parameter: ${sale_price}`);
         findAllProductData = await this.productService.findAllProductsBySalePrice(
           sale_price.toString(),
           Number.parseInt(limit.toString()),
-          Number.parseInt(page.toString())
-          );
+          Number.parseInt(page.toString()),
+        );
       } else {
         findAllProductData = await this.productService.findAllProducts(
-          Number.parseInt(limit===undefined?'100':limit.toString()),
-          Number.parseInt(page===undefined?'1':page.toString())
+          Number.parseInt(limit === undefined ? '100' : limit.toString()),
+          Number.parseInt(page === undefined ? '1' : page.toString()),
         );
       }
       //const findAllProductData: Product[] = await this.productService.findAllProducts();
       res.status(200).json(findAllProductData);
-
     } catch (error) {
       next(error);
     }
