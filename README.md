@@ -38,4 +38,3 @@ Optional:
 2. Gain extra points if you fetch the images asynchronously.
 3. Additional points for making the images cache-able and displayable in off-line mode, i.e. while off-line, make sure that all the images that have already been fetched from previous queries to be immediate accessible.
 
-Good luck!
