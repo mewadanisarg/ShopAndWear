@@ -13,7 +13,7 @@ import { Routes } from '@interfaces/routes.interface';
 import errorMiddleware from '@middlewares/error.middleware'
 import { logger, stream } from '@utils/logger';
 import ProductService from './services/products.service';
-
+import cors from 'cors';
 class App {
   public app: express.Application;
   public port: string | number;
@@ -21,7 +21,7 @@ class App {
 
   constructor(routes: Routes[]) {
     this.app = express();
-    this.port = process.env.PORT || 3000;
+    this.port = process.env.PORT || 3001;
     this.env = process.env.NODE_ENV || 'development';
 
     this.initializeMiddlewares();
@@ -53,6 +53,7 @@ class App {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cookieParser());
+    this.app.use(cors());
   }
 
   private initializeRoutes(routes: Routes[]) {

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpException } from '@exceptions/HttpException';
 import productModel from '@/models/products.model';
 import { Product } from '@/interfaces/products.interface';
