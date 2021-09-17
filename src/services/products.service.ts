@@ -32,7 +32,6 @@ class ProductService {
   public async findProductById(gtin: string): Promise<Product> {
     const foundProduct: Product = this.products.find(product => product.gtin === gtin);
     if (!foundProduct) throw new HttpException(409, "You're not user");
-
     return foundProduct;
   }
 }
